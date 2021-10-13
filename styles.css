@@ -1,6 +1,6 @@
 * {
   text-align: center;
-  background-color: aqua;
+  background-color: rgb(14, 65, 65);
 }
 
 .jogo {
@@ -16,5 +16,5 @@ input {
   height: 95px;
   border: solid 1px;
   font-size: 80px;
-  background-color: brown;
+  background-color: rgb(120, 3, 199);
 }

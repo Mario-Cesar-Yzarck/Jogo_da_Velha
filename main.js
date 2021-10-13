@@ -6,6 +6,14 @@
   const oh = 'O'
   var arrayCasasX = []
   var arrayCasasO = []
+  const regex1 = new RegExp('1,2,3', 'g')
+  const regex2 = new RegExp('4,5,6', 'g')
+  const regex3 = new RegExp('7,8,9', 'g')
+  const regex4 = new RegExp('1([,\\d+]{1,})?,5([,\\d+]{1,})?,9', 'g')
+  const regex5 = new RegExp('3([,\\d+]{1,})?,5([,\\d+]{1,})?,7', 'g')
+  const regex6 = new RegExp('1([,\\d+]{1,})?,4([,\\d+]{1,})?,7', 'g')
+  const regex7 = new RegExp('2([,\\d+]{1,})?,5([,\\d+]{1,})?,8', 'g')
+  const regex8 = new RegExp('3([,\\d+]{1,})?,6([,\\d+]{1,})?,9', 'g')
 
   $casas.forEach((element, index) => {
     element.addEventListener(
@@ -16,7 +24,6 @@
             element.value = xis
             arrayCasasX.push(element.id)
             verificWinX(arrayCasasX)
-            console.log(arrayCasasX)
             counter += 1
             return element.value
           } else {
@@ -27,7 +34,6 @@
             element.value = oh
             arrayCasasO.push(element.id)
             verificWinO(arrayCasasO)
-            console.log(arrayCasasO)
             counter += 1
             return element.value
           } else {
@@ -48,25 +54,79 @@
   }
 
   function verificWinX(array) {
-    if (array.sort().includes('1' && '2' && '3')) return alert('x win')
-    if (array.sort().includes('4' && '5' && '6')) return alert('x win')
-    if (array.sort().includes('7' && '8' && '9')) return alert('x win')
-    if (array.sort().includes('1' && '5' && '9')) return alert('x win')
-    if (array.sort().includes('3' && '5' && '7')) return alert('x win')
-    if (array.sort().includes('1' && '4' && '7')) return alert('x win')
-    if (array.sort().includes('2' && '5' && '8')) return alert('x win')
-    if (array.sort().includes('3' && '6' && '9')) return alert('x win')
+    if (regex1.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex2.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex3.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex4.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex5.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex6.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex7.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
+    if (regex8.test(array.sort().join(','))) {
+      return endGame(xis)
+    }
   }
 
   function verificWinO(array) {
-    if (array.sort().includes('1' && '2' && '3')) return alert('o win')
-    if (array.sort().includes('4' && '5' && '6')) return alert('o win')
-    if (array.sort().includes('7' && '8' && '9')) return alert('o win')
-    if (array.sort().includes('1' && '5' && '9')) return alert('o win')
-    if (array.sort().includes('3' && '5' && '7')) return alert('o win')
-    if (array.sort().includes('1' && '4' && '7')) return alert('o win')
-    if (array.sort().includes('2' && '5' && '8')) return alert('o win')
-    if (array.sort().includes('3' && '6' && '9')) return alert('o win')
+    if (regex1.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+
+    if (regex2.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex3.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex4.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex5.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex6.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex7.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+    if (regex8.test(array.sort().join(','))) {
+      return endGame(oh)
+    }
+  }
+
+  function endGame(string) {
+    if (string === xis) {
+      arrayCasasX = []
+      arrayCasasO = []
+      counter = 1
+      $casas.forEach(element => {
+        element.value = ''
+      })
+      return alert('Fim de jogo, X venceu!')
+    }
+    if (string === oh) {
+      arrayCasasX = []
+      arrayCasasO = []
+      counter = 0
+      $casas.forEach(element => {
+        element.value = ''
+      })
+      return alert('Fim de jogo, O venceu!')
+    }
   }
 })(window, document)
 //fazendo testes com jogo da velha

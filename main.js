@@ -1,7 +1,7 @@
 ;(function (win, doc) {
   'use strict'
   const $casas = doc.querySelectorAll('.casa')
-  var counter = 1
+  var counter = 0
   const xis = 'X'
   const oh = 'O'
   var arrayCasasX = []
@@ -15,117 +15,100 @@
   const regex7 = new RegExp('2([,\\d+]{1,})?,5([,\\d+]{1,})?,8', 'g')
   const regex8 = new RegExp('3([,\\d+]{1,})?,6([,\\d+]{1,})?,9', 'g')
 
+  const arrayRegex = [
+    regex1,
+    regex2,
+    regex3,
+    regex4,
+    regex5,
+    regex6,
+    regex7,
+    regex8
+  ]
+
   $casas.forEach((element, index) => {
     element.addEventListener(
       'click',
       event => {
         if (verificWhoTurnIs(counter)) {
-          if (element.value === '') {
-            element.value = xis
-            arrayCasasX.push(element.id)
-            verificWinX(arrayCasasX)
-            counter += 1
-            return element.value
-          } else {
-            alert('outra casa')
-          }
+          playX(element)
         } else {
-          if (element.value === '') {
-            element.value = oh
-            arrayCasasO.push(element.id)
-            verificWinO(arrayCasasO)
-            counter += 1
-            return element.value
-          } else {
-            alert('outra casa')
-          }
+          playO(element)
         }
       },
       false
     )
   })
 
-  function verificWhoTurnIs(counter) {
-    if (counter % 2 === 1) {
-      return true
+  function playX(element) {
+    if (element.value === '') {
+      element.value = xis
+      arrayCasasX.push(element.id)
+      counter += 1
+      verificWinX(arrayCasasX)
+      isDraw(counter)
+      return element.value
     } else {
-      return false
+      alert('outra casa')
     }
+  }
+
+  function playO(element) {
+    if (element.value === '') {
+      element.value = oh
+      arrayCasasO.push(element.id)
+      counter += 1
+      verificWinO(arrayCasasO)
+      isDraw(counter)
+      return element.value
+    } else {
+      alert('outra casa')
+    }
+  }
+
+  function verificWhoTurnIs(counter) {
+    return counter % 2 === 0 ? true : false
   }
 
   function verificWinX(array) {
-    if (regex1.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex2.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex3.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex4.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex5.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex6.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex7.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
-    if (regex8.test(array.sort().join(','))) {
-      return endGame(xis)
-    }
+    arrayRegex.forEach(element => {
+      if (element.test(array.sort().join(','))) {
+        return endGameX()
+      }
+    })
   }
 
   function verificWinO(array) {
-    if (regex1.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-
-    if (regex2.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex3.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex4.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex5.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex6.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex7.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
-    if (regex8.test(array.sort().join(','))) {
-      return endGame(oh)
-    }
+    arrayRegex.forEach(element => {
+      if (element.test(array.sort().join(','))) {
+        return endGameO()
+      }
+    })
   }
 
-  function endGame(string) {
-    if (string === xis) {
-      arrayCasasX = []
-      arrayCasasO = []
-      counter = 1
-      $casas.forEach(element => {
-        element.value = ''
-      })
-      return alert('Fim de jogo, X venceu!')
-    }
-    if (string === oh) {
-      arrayCasasX = []
-      arrayCasasO = []
-      counter = 0
-      $casas.forEach(element => {
-        element.value = ''
-      })
-      return alert('Fim de jogo, O venceu!')
+  function endGameX() {
+    resetGame()
+    return alert('Fim de jogo, X venceu!')
+  }
+
+  function endGameO() {
+    resetGame()
+    return alert('Fim de jogo, O venceu!')
+  }
+
+  function resetGame() {
+    arrayCasasX = []
+    arrayCasasO = []
+    counter = 0
+    $casas.forEach(element => {
+      element.value = ''
+    })
+  }
+
+  function isDraw(number) {
+    if (number > 8) {
+      resetGame()
+      return alert('Deu velha!')
     }
   }
 })(window, document)
